@@ -4,7 +4,7 @@
         [clojure.contrib.str-utils :only [str-join]]
         [clojure.contrib.base64 :as base64])
   (:import (java.net URL
-                     URLEncoder
+                     URLEncoder URLDecoder
                      HttpURLConnection)
            (java.io StringReader InputStream)))
 
@@ -132,7 +132,7 @@ by a server."
       (.setRequestProperty connection
                            "Authorization"
                            (str "Basic "
-                                (base64/encode-str ui))))
+                                (base64/encode-str (URLDecoder/decode ui)))))
 
     (if body
       (send-body body connection headers)
