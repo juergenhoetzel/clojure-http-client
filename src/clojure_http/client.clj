@@ -128,11 +128,11 @@ by a server."
                            "Cookie"
                            (create-cookie-string cookies)))
 
-    (when (.getUserInfo u)
+    (if-let [ui (.getUserInfo u)]
       (.setRequestProperty connection
                            "Authorization"
                            (str "Basic "
-                                (base64/encode-str (.getUserInfo u)))))
+                                (base64/encode-str ui))))
 
     (if body
       (send-body body connection headers)
